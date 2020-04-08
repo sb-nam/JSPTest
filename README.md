@@ -120,3 +120,42 @@
    }
 %>
 ```
+## 시험sql
+```
+create table member_tbl_02(
+custno NUMBER(6) PRIMARY key,
+custname VARCHAR2(20),
+phone varchar2(13),
+address VARCHAR2(60),
+joindate date,
+grade CHAR(1),
+city CHAR(2)
+);
+
+create table money_tbl_02(
+custno NUMBER(6) ,
+salenol NUMBER(8),
+pcost NUMBER(8),
+amount NUMBER(4),
+price NUMBER(8),
+pcode VARCHAR2(4),
+sdate date,
+PRIMARY key(custno,salenol)
+);
+insert into money_tbl_02 values(100001,20160001,500,5,2500,'a001',date'2016-01-01');
+insert into money_tbl_02 values(100001,20160002,1000,4,4000,'a002',date'2016-01-01');
+insert into money_tbl_02 values(100001,20160003,500,3,1500,'a008',date'2016-01-01');
+insert into money_tbl_02 values(100002,20160004,2000,1,2000,'a004',date'2016-01-02');
+insert into money_tbl_02 values(100002,20160005,500,1,500,'a001',date'2016-01-03');
+insert into money_tbl_02 values(100003,20160006,1500,2,3000,'a003',date'2016-01-03');
+insert into money_tbl_02 values(100004,20160007,500,2,1000,'a001',date'2016-01-04');
+insert into money_tbl_02 values(100004,20160008,300,1,300,'a005',date'2016-01-04');
+insert into money_tbl_02 values(100004,20160009,600,1,600,'a006',date'2016-01-04');
+insert into money_tbl_02 values(100004,20160010,3000,1,3000,'a007',date'2016-01-06');
+commit;
+
+select * from member_tbl_02;
+select * from money_tbl_02;
+
+select r.custno,r.custname,r.grade,sum(y.price) as sales from member_tbl_02 r join money_tbl_02 y on(r.custno=y.custno) group by r.custno, r.custname, r.grade order by sales desc;
+```
